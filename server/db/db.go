@@ -7,12 +7,15 @@ import (
 	"github.com/Cali0707/palette_pal/pkg/config"
 	"github.com/golang-migrate/migrate/v4"
 	dpgx "github.com/golang-migrate/migrate/v4/database/pgx"
+	"github.com/jmoiron/sqlx"
 )
 
-func RunMigrationsClean(c config.Config) (err error) {
-	databaseString := fmt.Sprintf("postgres://%s:%s@database:5432/%s", c.PostgresUser, c.PostgresPassword, c.PostgresDB)
+type DB struct {
+	DB *sqlx.DB
+}
 
-	fmt.Printf(databaseString)
+func RunMigrationsClean(c config.Config) (err error) {
+	databaseString := getDatabaseString(c)
 
 	db, err := sql.Open("pgx", databaseString)
 	if err != nil {
@@ -43,4 +46,22 @@ func RunMigrationsClean(c config.Config) (err error) {
 		return
 	}
 	return nil
+}
+
+func Connect(c config.Config) (db DB, err error) {
+	_db, err := sqlx.Connect("pgx", getDatabaseString(c))
+	//conn, err := pgx.Connect(ctx, getDatabaseString(c))
+	if err != nil {
+		fmt.Printf("Unable to connect to database: %s", err.Error())
+		return
+	}
+
+	db.DB = _db
+
+	return
+}
+
+func getDatabaseString(c config.Config) string {
+	databaseString := fmt.Sprintf("postgres://%s:%s@database:5432/%s", c.PostgresUser, c.PostgresPassword, c.PostgresDB)
+	return databaseString
 }
