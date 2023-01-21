@@ -3,6 +3,19 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 }
+final List<String> entries = <String>['Recipe A', 'Recipe B', 'Recipe C','Recipe D'];
+//final List<int> colorCodes = <int>[600, 500, 400,300];
+final List<String> images = <String>['images/shrimp.jpg','images/sushi.jpg','images/lasagna.jpg','images/empanadas.jpg'];
+
+//class containing basic information of each post
+class Post{
+  String title;
+  String image;
+  int pID;
+  Post(this.title,this.image, this.pID);
+}
+
+//final List<Post> postList = <Post>[];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Palette Pal',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,8 +37,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Palette Pal'),
     );
+
   }
 }
 
@@ -61,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -75,41 +90,63 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
+      body: ListView.separated(
+
+        padding: const EdgeInsets.all(8),
+        itemCount: entries.length,
+        itemBuilder:(BuildContext context, int index) {
+          return Container(
+
+            height: 350,
+            width: 80,
+            //color: Colors.amber[colorCodes[index]],
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  '${images[index]}'),
+                fit: BoxFit.fill,
+              ),
+              shape: BoxShape.rectangle,
+            ),
+            //child: Center(
+                child: Text('${entries[index]}', textAlign: TextAlign.start)
+               // child: Image(image: AssetImage('${images[index]}'))
+            //),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      ),
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        //backgroundColor: Colors.blueAccent,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outline),
+            label: 'Post',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
       ),
+      /*
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.safety_check),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),*/ // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
