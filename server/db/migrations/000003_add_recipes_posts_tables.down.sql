@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS recipe_photos;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS recipes;

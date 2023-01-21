@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/Cali0707/palette_pal/db"
 	"github.com/Cali0707/palette_pal/models"
 	"github.com/gin-gonic/gin"
@@ -31,8 +30,6 @@ func GetUserHandler(db db.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"message": "Please provide a username!"})
 			return
 		}
-
-		fmt.Printf(username)
 
 		user, err := models.GetUserByUsername(username, db.DB)
 		if err != nil {
