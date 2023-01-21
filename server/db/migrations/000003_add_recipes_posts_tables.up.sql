@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS posts(
 );
 
 CREATE TABLE IF NOT EXISTS recipe_photos(
+    id SERIAL PRIMARY KEY,
     recipe_id INTEGER NOT NULL,
     post_id INTEGER,
     photo_link VARCHAR(100),

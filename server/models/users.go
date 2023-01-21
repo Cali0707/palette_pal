@@ -11,7 +11,7 @@ type User struct {
 	UserName  string `json:"username" db:"username"`
 	Password  string `json:"password" db:"password"`
 	Email     string `json:"email" db:"email"`
-	CreatedAt string `json:"created_at" db:"created_at"`
+	CreatedAt string `json:"createdAt" db:"created_at"`
 }
 
 func CreateUser(user User, db *sqlx.DB) (err error) {
