@@ -1,17 +1,20 @@
 package main
 
 import (
-    "github.com/gin-gonic/gin"
+	cohere "github.com/cohere-ai/cohere-go"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-    port := ":3000"
+	port := ":3000"
 
-    r := gin.Default()
-    
-    r.GET("/", func(c *gin.Context) {
-        c.String(200, "Hello, world!")
-    })
+	r := gin.Default()
 
-    r.Run(port)
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "Hello, world!")
+	})
+
+	r.Run(port)
+
+	co, err := cohere.CreateClient("<<apiKey>>")
 }
