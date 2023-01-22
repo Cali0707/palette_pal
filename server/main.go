@@ -1,7 +1,6 @@
 package main
 
 import (
-	cohere "github.com/cohere-ai/cohere-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,5 +15,4 @@ func main() {
 
 	r.Run(port)
 
-	co, err := cohere.CreateClient("<<apiKey>>")
 }
