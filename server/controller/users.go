@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/Cali0707/palette_pal/db"
 	"github.com/Cali0707/palette_pal/models"
 	"github.com/gin-gonic/gin"
@@ -17,6 +16,7 @@ func CreateUserHandler(db db.DB) gin.HandlerFunc {
 			err := models.CreateUser(newUser, db.DB)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"message": "Something went wrong on our end, please try again later!"})
+				return
 			}
 
 			c.JSON(http.StatusOK, gin.H{"message": "Welcome to Palette Pals!"})
@@ -31,8 +31,6 @@ func GetUserHandler(db db.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"message": "Please provide a username!"})
 			return
 		}
-
-		fmt.Printf(username)
 
 		user, err := models.GetUserByUsername(username, db.DB)
 		if err != nil {

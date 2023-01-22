@@ -18,5 +18,11 @@ func InitializeRouter(db db.DB) (router *gin.Engine) {
 	usersRouter.POST("/create", controller.CreateUserHandler(db))
 	usersRouter.GET("", controller.GetUserHandler(db))
 
+	recipesRouter := router.Group("/recipes")
+	recipesRouter.POST("/create", controller.CreateRecipeHandler(db))
+
+	postsRouter := router.Group("/posts")
+	postsRouter.POST("/create", controller.CreatePostHandler(db))
+
 	return
 }
